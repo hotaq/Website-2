@@ -1,5 +1,7 @@
 // Constants
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+    ? '/api'  // Will be prefixed with Vercel URL
+    : 'http://localhost:3000';
 const GAME_PHASES = {
     JOINING: 1,
     CHALLENGE: 2,

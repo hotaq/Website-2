@@ -24,14 +24,14 @@ mongoose.set('strictQuery', false); // Fix the deprecation warning
 
 // MongoDB Connection with detailed error handling
 const MONGODB_URI = 'mongodb+srv://cluster0.pqwf7.mongodb.net/boardgame';
-console.log('Connecting to MongoDB...'); // Add logging
+console.log('Connecting to MongoDB...'); 
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     user: process.env.MONGO_USER,
     pass: process.env.MONGO_PASSWORD,
-}).then(() => {
+}).then(async () => {  // Make this callback async
     console.log('Connected to MongoDB successfully');
     try {
         // List all collections
