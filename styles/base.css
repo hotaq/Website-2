@@ -1,0 +1,30 @@
+/* Import Open Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+/* Base variables */
+:root {
+    --primary-color: #ff4b6b;
+    --secondary-color: #0066ff;
+    --background-dark: #1e1e1e;
+    --text-light: #ffffff;
+    --text-dim: #aaaaaa;
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+    --font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    margin: 0;
+    background: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    font-family: var(--font-family);
+} 

@@ -1,0 +1,18 @@
+# Scratchpad
+
+Task: Create login/register pages for a board game website
+- Dark gray theme
+- Rainbow effects
+- Modern and engaging design
+
+Steps:
+[X] Create HTML structure for login/register
+[X] Create CSS with dark theme and rainbow effects
+[X] Add basic JavaScript for form switching
+[ ] Add form validation
+[ ] Add responsive design
+
+Files needed:
+1. index.html - Main login/register page
+2. styles.css - Styling and animations
+3. script.js - Form handling 

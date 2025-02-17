@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพื่อนเลว - Game Room</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <div class="animated-background">
+        <div class="box" style="--i:1;"></div>
+        <div class="box" style="--i:2;"></div>
+    </div>
+
+    <div class="game-container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <button id="leaveGameBtn" class="leave-btn" onclick="leaveGame()">
+                    <span class="icon">←</span>
+                    Return to Lobby
+                </button>
+                <h1 class="room-name"></h1>
+            </div>
+            
+            <div class="header-center">
+                <div class="phase-indicator">
+                    <div class="phase" data-phase="1">
+                        <span class="phase-icon">👥</span>
+                        <span class="phase-text">Joining</span>
+                    </div>
+                    <div class="phase" data-phase="2">
+                        <span class="phase-icon">⚔️</span>
+                        <span class="phase-text">Challenge</span>
+                    </div>
+                    <div class="phase" data-phase="3">
+                        <span class="phase-icon">🗳️</span>
+                        <span class="phase-text">Voting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="game-controls">
+                    <div class="timer-display" id="timerDisplay">
+                        <span class="timer-icon">⏳</span>
+                        <span class="timer-text">Waiting for players...</span>
+                    </div>
+                    <div class="start-controls" id="startControls">
+                        <button id="startGameBtn" class="start-btn">
+                            <span class="admin-badge">Admin</span>
+                            <span class="btn-icon">▶️</span>
+                            Start Game
+                        </button>
+                        <button id="stopGameBtn" class="stop-btn">
+                            <span class="admin-badge">Admin</span>
+                            <span class="btn-icon">⏹️</span>
+                            Stop Game
+                        </button>
+                        <div class="player-count">
+                            <span id="currentPlayers">0</span>/<span id="maxPlayers">0</span>
+                            <span class="count-label">Players</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <main class="game-main">
+            <!-- Players Section -->
+            <section class="players-section">
+                <div class="section-header">
+                    <h2>Players</h2>
+                    <div class="section-controls">
+                        <button class="view-toggle">
+                            <span class="icon">📊</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="players-grid" id="playersList">
+                    <!-- Players will be added here -->
+                </div>
+            </section>
+
+            <!-- Game Actions -->
+            <section class="game-actions-section">
+                <!-- Challenge Form -->
+                <div class="challenge-container" style="display: none;">
+                    <div class="section-header">
+                        <h2>Make a Challenge</h2>
+                        <div class="help-tooltip">
+                            <span class="icon">ℹ️</span>
+                            <div class="tooltip-content">
+                                Choose a player and describe why they're a bad friend
+                            </div>
+                        </div>
+                    </div>
+                    <form class="challenge-form">
+                        <div class="form-group">
+                            <label for="targetPlayer">Target Player</label>
+                            <select id="targetPlayer" required>
+                                <option value="">Select a player to challenge</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="challengeText">Challenge Description</label>
+                            <textarea id="challengeText" 
+                                    placeholder="Describe why this player is a bad friend..."
+                                    required></textarea>
+                            <div class="text-counter">0/200</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Attack Points</label>
+                            <div class="points-selector">
+                                <button type="button" data-points="10" class="point-btn">
+                                    <span class="point-value">10</span>
+                                    <span class="point-label">Light Attack</span>
+                                </button>
+                                <button type="button" data-points="20" class="point-btn">
+                                    <span class="point-value">20</span>
+                                    <span class="point-label">Medium Attack</span>
+                                </button>
+                                <button type="button" data-points="30" class="point-btn">
+                                    <span class="point-value">30</span>
+                                    <span class="point-label">Heavy Attack</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" id="submitChallenge" class="submit-btn">
+                            <span class="btn-icon">⚔️</span>
+                            Submit Challenge
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Active Challenges -->
+                <div class="challenges-list" style="display: none;">
+                    <div class="section-header">
+                        <h2>Active Challenges</h2>
+                        <div class="challenge-count">
+                            <span id="challengeCount">0</span> active
+                        </div>
+                    </div>
+                    <div id="challengesList" class="challenges-grid">
+                        <!-- Challenges will be added here -->
+                    </div>
+                </div>
+
+                <!-- Voting Section -->
+                <div class="voting-container" style="display: none;">
+                    <div class="section-header">
+                        <h2>Vote on Challenges</h2>
+                        <div class="voting-timer">30s</div>
+                    </div>
+                    <div id="votingList" class="voting-grid">
+                        <!-- Voting options will be added here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add this after the game controls section -->
+            <div class="bot-controls" id="botControls">
+                <button class="bot-btn" onclick="addBot()">
+                    <span class="btn-icon">🤖</span>
+                    Add Bot
+                </button>
+                <div class="bot-count">
+                    Bots: <span id="botCount">0</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="confirmLeaveModal" class="modal">
+        <div class="modal-content">
+            <h3>Leave Game?</h3>
+            <p>You can rejoin this game later using the room code <strong id="roomCodeDisplay"></strong></p>
+            <div class="modal-buttons">
+                <button class="modal-btn leave" onclick="confirmLeave()">
+                    <span class="btn-icon">🚪</span>
+                    Leave Game
+                </button>
+                <button class="modal-btn stay" onclick="hideConfirmLeave()">
+                    <span class="btn-icon">↩️</span>
+                    Stay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorContainer" class="modal error-modal">
+        <div class="modal-content">
+            
+            <p id="errorMessage"></p>
+            <button onclick="window.location.href='/lobby.html'">Return to Lobby</button>
+        </div>
+    </div>
+
+    <script src="scripts/game.js"></script>
+</body>
+</html> 

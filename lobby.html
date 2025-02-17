@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพื่อนเลว - Lobby</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/lobby.css">
+</head>
+<body>
+    <div class="animated-background">
+        <div class="box" style="--i:1;"></div>
+        <div class="box" style="--i:2;"></div>
+    </div>
+
+    <div class="container">
+        <header class="lobby-header">
+            <h1 class="title">เพื่อนเลว</h1>
+            <div class="user-info">
+                <div class="profile-dropdown">
+                    <button class="profile-btn" onclick="toggleProfileMenu()">
+                        <span class="profile-icon">👤</span>
+                        <span id="username"></span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="profile-menu" id="profileMenu">
+                        <div class="menu-header">
+                            <span class="profile-icon large">👤</span>
+                            <div class="user-details">
+                                <span id="profileUsername"></span>
+                                <span id="profileEmail" class="email"></span>
+                            </div>
+                        </div>
+                        <div class="menu-items">
+                            <button onclick="window.location.href='/settings.html'" class="menu-item">
+                                <span class="icon">⚙️</span>
+                                Settings
+                            </button>
+                            <button onclick="logout()" class="menu-item logout">
+                                <span class="icon">🚪</span>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="adminPanel" style="display: none;" class="admin-panel">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <div class="user-stats">
+                    <span id="totalUsers">Total Users: 0</span>
+                    <span id="onlineUsers">Online: 0</span>
+                </div>
+            </div>
+            <div class="online-users" id="onlineUsersList">
+                <!-- Online users will be listed here -->
+            </div>
+        </div>
+
+        <div class="lobby-container">
+            <div class="lobby-box">
+                <div class="quick-actions">
+                    <button class="action-btn create" onclick="showCreateRoom()">
+                        <span class="icon">+</span>
+                        <span class="text">Create Room</span>
+                    </button>
+                    <button class="action-btn join" onclick="showJoinRoom()">
+                        <span class="icon">→</span>
+                        <span class="text">Join with Code</span>
+                    </button>
+                    <button id="rejoinBtn" class="action-btn rejoin" style="display: none;" onclick="rejoinLastRoom()">
+                        <span class="icon">↩</span>
+                        <span class="text">Rejoin Last Game</span>
+                    </button>
+                </div>
+
+                <div class="room-list">
+                    <div class="room-list-header">
+                        <h2>Available Rooms</h2>
+                        <div class="room-filters">
+                            <select id="playerFilter" onchange="filterRooms()">
+                                <option value="all">All Players</option>
+                                <option value="2">2 Players</option>
+                                <option value="3">3 Players</option>
+                                <option value="4">4 Players</option>
+                            </select>
+                            <div class="room-count" id="roomCount">0 rooms available</div>
+                        </div>
+                    </div>
+                    <div class="rooms-grid" id="roomList">
+                        <!-- Rooms will be populated here -->
+                    </div>
+                    <div class="no-rooms" id="noRooms" style="display: none;">
+                        <div class="empty-state">
+                            <div class="empty-icon">🎮</div>
+                            <p>No rooms available</p>
+                            <button class="create-room-btn" onclick="showCreateRoom()">Create a Room</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Room Modal -->
+                <div id="createRoomModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Create New Room</h2>
+                            <button class="close-btn" onclick="hideModals()">×</button>
+                        </div>
+                        <form id="createRoomForm">
+                            <div class="form-group">
+                                <label for="roomName">Room Name</label>
+                                <input type="text" id="roomName" name="roomName" placeholder="Enter room name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="maxPlayers">Number of Players</label>
+                                <select id="maxPlayers" name="maxPlayers" required>
+                                    <option value="2">2 Players</option>
+                                    <option value="3">3 Players</option>
+                                    <option value="4">4 Players</option>
+                                </select>
+                            </div>
+                            
+                            <div class="room-settings">
+                                <h3>Room Settings</h3>
+                                <div class="settings-grid">
+                                    <div class="form-group">
+                                        <label for="startTimer">Auto Start Timer (seconds)</label>
+                                        <input type="number" id="startTimer" name="startTimer" value="60" min="30" max="300">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxHealth">Max Health</label>
+                                        <input type="number" id="maxHealth" name="maxHealth" value="100" min="50" max="200">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="minDamage">Min Damage</label>
+                                        <input type="number" id="minDamage" name="minDamage" value="10" min="5" max="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxDamage">Max Damage</label>
+                                        <input type="number" id="maxDamage" name="maxDamage" value="30" min="10" max="100">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-buttons">
+                                <button type="submit" class="create-btn">Create Room</button>
+                                <button type="button" class="cancel-btn" onclick="hideModals()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Join Room Modal -->
+                <div id="joinRoomModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Join Room</h2>
+                            <button class="close-btn" onclick="hideModals()">×</button>
+                        </div>
+                        <form id="joinRoomForm">
+                            <div class="form-group">
+                                <label for="roomCode">Room Code</label>
+                                <input type="text" id="roomCode" name="roomCode" placeholder="Enter room code" required>
+                            </div>
+                            <div class="modal-buttons">
+                                <button type="submit" class="join-btn">Join Room</button>
+                                <button type="button" class="cancel-btn" onclick="hideModals()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/lobby.js"></script>
+</body>
+</html> 

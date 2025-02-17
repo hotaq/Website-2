@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพื่อนเลว - Board Game</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="animated-background">
+        <div class="box" style="--i:1;"></div>
+        <div class="box" style="--i:2;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="form-container">
+            <div class="form-box">
+                <h1 class="title">เพื่อนเลว</h1>
+                <p class="subtitle">Board Game</p>
+                
+                <div class="button-box">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn active" onclick="login()">Login</button>
+                    <button type="button" class="toggle-btn" onclick="register()">Register</button>
+                </div>
+                
+                <div class="form-wrapper">
+                    <form id="login" class="input-group">
+                        <input type="text" class="input-field" placeholder="Username" required>
+                        <input type="password" class="input-field" placeholder="Password" required>
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox">
+                            <span>Remember Password</span>
+                        </div>
+                        <button type="submit" class="submit-btn">Log In</button>
+                    </form>
+
+                    <form id="register" class="input-group">
+                        <input type="text" class="input-field" placeholder="Username" required>
+                        <input type="email" class="input-field" placeholder="Email" required>
+                        <input type="password" class="input-field" placeholder="Password" required>
+                        <input type="password" class="input-field" placeholder="Confirm Password" required>
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="checkbox" required>
+                            <span>I agree to the terms & conditions</span>
+                        </div>
+                        <button type="submit" class="submit-btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="credits">
+        <div class="credit-content">
+            <p>Created by</p>
+            <p class="creator-name">Chinnaphat Khuncharoen</p>
+            <p class="creator-info">Computer Engineering Student at Chulalongkorn University</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank" class="social-link">
+                    <img src="images/25231.png" alt="GitHub" class="social-icon">
+                </a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link">
+                    <img src="images/20673.png" alt="facebook" class="social-icon">
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
